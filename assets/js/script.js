@@ -1,4 +1,8 @@
 function loadThis(){
+    <!--Materializecss Slider-->
+    $(document).ready(function () {
+        $('.slider').slider({full_width: true});
+    });
 	//api:  http://www.ist.rit.edu/api/
 	$(document).ready(function(){
 		//ajax call

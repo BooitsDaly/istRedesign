@@ -3,5 +3,7 @@
 }
 .intro-text{
     color:aliceblue;
-    margin: 0px;
+}
+body{
+    background-color: black;
 }
