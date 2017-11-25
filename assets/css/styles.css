@@ -1,12 +1,15 @@
-.intro{
-    background-image: url(../images/tech.jpeg);
+/* for the flip effect */
+.flip {
+    height: 199px;
+    width: 300px;
+    margin: 0 auto;
 }
-.intro-text{
-    color:aliceblue;
+.flip img {
+    width: 300px;
+    height: auto;
 }
-body{
-    background-color: black;
-}
-.slider{
-    background-color: black;
+.flip .back {
+    background: #2184cd;
+    color: #fff;
+    text-align: center;
 }

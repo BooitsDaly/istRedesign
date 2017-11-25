@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app>
+<html>
 
     <head>
         <title>Slider</title>
@@ -9,64 +9,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!--my stuff-->
         <link type="text/css" rel="stylesheet" href="assets/css/styles.css"/>
-        <script src="assets/js/script.js"></script>
+        
         <!--Import jQuery before materialize.js-->
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-        <script src="typeit.js"></script>
-
+        <script src="https://cdn.jsdelivr.net/jquery.typeit/4.4.0/typeit.min.js"></script>
+        <script src="assets/js/jquery.flip.min.js"></script>
         <!-- Compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+        <!--flip pluggin-->
+        
+        <script src="assets/js/script.js"></script>
     </head>
 
     <body>
-        <!--your code start-->
-        <div class="slider fullscreen">
-            <ul class="slides">
-                <li>
-                    <img src="assets/images/developer-developer.jpg">
-                    <div class="caption left-align">
-                        <h3>Left Aligned Caption</h3>
-                        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                    </div>
-                </li>
-                <li>
-                    <img src="assets/images/careerfair.jpg">
-                    <div class="caption left-align">
-                        <h3>Left Aligned Caption</h3>
-                        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                    </div>
-                </li>
-                <li>
-                    <img src="assets/images/Rochester-pic.jpg">
-                    <div class="caption left-align">
-                        <h3>Left Aligned Caption</h3>
-                        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                    </div>
-                </li>
-                <li>
-                    <img src="assets/images/people.JPG">
-                    <div class="caption left-align">
-                        <h3>Left Aligned Caption</h3>
-                        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                    </div>
-                </li>
-                <li>
-                    <img src="assets/images/bookcase-resources.jpg">
-                    <div class="caption left-align">
-                        <h3>Left Aligned Caption</h3>
-                        <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                    </div>
-                </li>
-            </ul>
+        <!--nav bar -->
+      <nav>
+        <div class="nav-wrapper">
+          <a href="#" class="brand-logo right">Logo</a>
         </div>
-        
-
-        <!--Materializecss Slider-->
-        <script>
-            $(document).ready(function () {
-                $('.slider').slider({full_width: true});
-            });
-        </script>         
+      </nav>
+      <div class="container">    
+        <div id="about"> </div>
+        <div id="undergraduate"> </div>
+      </div>
     </body>
-
+    
 </html>
