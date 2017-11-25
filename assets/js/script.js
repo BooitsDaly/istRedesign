@@ -32,53 +32,42 @@ function myXHR(t,d) {
 	});
 } //end myXHR
 
-
-
 //get the about section
 myXHR('get', {'path':'/about/'}).done(function(json){
 	    
-        var x = '<div class= "section">';
-        x +='<h3 id="typeTitle"></h3>';
-		x+='<p>'+json.description+'</p>';
-        x += '</div> <div class="divider"></div> <div class="section">';
-		x+='<h5>"'+json.quote+'"</h5>';
-		x+='<p>-'+json.quoteAuthor+'</p>';
-        x +='</div> <div class="divider">';
-        x += '</div>';
-		$('#about').html(x);
-        
-        //create the typing effect for the title
-        $('#typeTitle').typeIt({
-             strings: ["RIT ISTE Department", json.title],
-             speed: 50,
-             breakLines: false,
-             autoStart: false
-        });
-	});
+    var x = '<div class= "section">';
+    x +='<h3 id="typeTitle"></h3>';
+    x+='<p>'+json.description+'</p>';
+    x += '</div> <div class="divider"></div> <div class="section">';
+    x+='<blockquote>"'+json.quote+'"</blockquote>';
+    x+='<p>-'+json.quoteAuthor+'</p>';
+    x +='</div> <div class="divider">';
+    x += '</div>';
+    $('#about').html(x);
+
+    //create the typing effect for the title
+    $('#typeTitle').typeIt({
+         strings: ["RIT ISTE Department", json.title],
+         speed: 50,
+         breakLines: false,
+         autoStart: false
+    });
+});
 
 //get all the undergrad degrees
 myXHR('get', {'path':'/degrees/undergraduate'}).done(function(json){
-    var y = '<h3> Undergraduate Degrees </h3>';
+    var y = '<h3 class="center-align"> Undergraduate Degrees </h3>';
     $('#undergraduate').html(y);
     $.each(json.undergraduate, function(i, item){	    
-        
-        //var x = '<div class="row">';
-            //x += '<div class="col s6">';
-                //x += '<div class="card-panel teal flip">';
-                    //add the flip effect
-                    var x = '<div class="flip">';
-                        x += '<div class="front">';
-                            x += '<h3 class="white-text">' + item.title + '</h3><br>';
-                            x += '<h4 class="white=text">' + item.degreeName + '</h4>';
-                        x += '</div>';
-                        x += '<div class="back">';
-                            x += '<span class="white=text">' + item.description + '</span><br>';
-                            x += '<span class="white=text">' + item.concenteration + '</span>';
-                        x += '</div>';
-                    //x += '</div>';
-               //x += '</div>';
-           // x += '</div>';
-       // x+= '</div>';
+         var x = '<div class="flip">';
+            x += '<div class="front">';
+                x += '<h4 class="black-text center-align">' + item.title + '</h4>';
+                x += '<h4 class="black=text center-align"> AKA:' + item.degreeName + '</h4>';
+            x += '</div>';
+            x += '<div class="back">';
+                x += '<p class="white=text center-align"> Description:' + item.description + '</p>';
+                x += '<p class="white=text center-align"> Concentrations:' + item.concentrations + '</p>';
+            x += '</div>';
 		$('#undergraduate').append(x);
         //function to give the hover value a trigger option
         $(function(){
@@ -87,5 +76,36 @@ myXHR('get', {'path':'/degrees/undergraduate'}).done(function(json){
             });
         });
     });
+    $('#undergraduate').append('<br></div> <div class="divider">');
 });
+
+//get all the grad degrees
+myXHR('get', {'path':'/degrees/graduate'}).done(function(json){
+    var y = '<h3 class="center-align"> Graduate Degrees </h3>';
+    $('#graduate').html(y);
+    $.each(json.graduate, function(i, item){	    
+        if(!(item.degreeName == 'graduate advanced certificates')){
+            var x = '<div class="flip">';
+                x += '<div class="front">';
+                    x += '<h4 class="black-text center-align">' + item.title + '</h4>';
+                    x += '<h4 class="black=text center-align"> AKA:' + item.degreeName + '</h4>';
+                x += '</div>';
+                x += '<div class="back">';
+                    x += '<p class="white=text center-align"> Description:' + item.description + '</p>';
+                    x += '<p class="white=text center-align"> Concentrations:' + item.concentrations + '</p>';
+                x += '</div>';
+            
+            $('#graduate').append(x);
+            
+            //function to give the hover value a trigger option
+            $(function(){
+                $(".flip").flip({
+                    trigger: 'hover'
+                });
+            });
+        }
+    });
+    $('#graduate').append('<br></div> <div class="divider">');
+});
+
     

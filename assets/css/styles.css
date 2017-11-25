@@ -1,15 +1,19 @@
 /* for the flip effect */
 .flip {
-    height: 199px;
-    width: 300px;
+    height: 150px;
+    width: 500px;
     margin: 0 auto;
 }
 .flip img {
-    width: 300px;
+    width: 250px;
     height: auto;
 }
 .flip .back {
     background: #2184cd;
     color: #fff;
     text-align: center;
+}
+
+.front{
+    background-color: orangered;
 }
