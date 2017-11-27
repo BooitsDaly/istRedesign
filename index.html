@@ -2,9 +2,8 @@
 <html>
 
     <head>
-        <title>Slider</title>
-        <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+        <title>RIT ISTE</title>
+        
         <!--Let browser know website is optimized for mobile-->
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <!--my stuff-->
@@ -12,11 +11,15 @@
         
         <!--Import jQuery before materialize.js-->
         <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <!-- Compiled and minified CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
         <script src="https://cdn.jsdelivr.net/jquery.typeit/4.4.0/typeit.min.js"></script>
         <script src="assets/js/jquery.flip.min.js"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <!-- Compiled and minified JavaScript -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-        <!--flip pluggin-->
+        <!--pagination pluggin-->
+        <script type="text/javascript" src="https://cdn.rawgit.com/pinzon1992/materialize_table_pagination/f9a8478f/js/pagination.js"></script>
         
         <script src="assets/js/script.js"></script>
     </head>
@@ -35,10 +38,25 @@
             <div id="graduate"> </div>
             <div id="minors"> </div>
             <div id="employment-into"></div>
-            <div id="employment-table"></div>
+            <div id="employment-table">
+                <div class="col-md-12 center text-center">
+                    <span class="left" id="total"></span>
+                    <ul class="pagination pager" id="myPager"></ul>
+                </div>
+            </div>
             <div id="employment-stats"></div>
+            <div id="employment-coop">
+                <div class="col-md-12 center text-center">
+                    <span class="left" id="total2"></span>
+                    <ul class="pagination pager" id="myPager2"></ul>
+                </div>  
+            </div>
             <div id="faculty"></div>
-              <div id="staff"></div>
+            <div id="staff"></div>
+            <div id="research"></div>
+            <div id="resources"></div>
+            <div id="newsHeader"></div>
+            <div id="news"></div>
           </div>
         </main>
         

@@ -18,3 +18,20 @@
     background-color: orangered;
 }
 
+.waves-effect{
+    width: 33.33%;
+}
+
+#tableHeader{
+    display: inline-block;
+}
+
+.collapsible-body{
+    height: 20em;
+    overflow-y: scroll;
+}
+
+#news{
+    height: 40em;
+    overflow-y: scroll;
+}

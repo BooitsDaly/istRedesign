@@ -183,22 +183,25 @@ myXHR('get', {'path':'/employment/'}).done(function(json){
     });
     x+='</ul>';
     x+='</div>';
-    x+='<div class="clearfix"></div>';
+    x+='<div></div>';
     x+='</div>';
 
     //coop table
-    y+='<h2>'+json.coopTable.title+'</h2>';
-    y+='<table id="coopTable" class="tables"><thead>';
+    y+='<h2 id="tableHeader">'+json.coopTable.title+'</h2>';
+    y+='<table id="empTable" class="tables"><thead>';
     y+='<tr><th>Employer</th>';
     y+='<th>Degree</th>';
     y+='<th>Location</th>';
     y+='<th>Term</th></tr>';
     y+='</thead><tbody>';
+    
+    var cnt = 0;
     $.each(json.coopTable.coopInformation,function(i,item){
         y+='<tr><td>'+item.employer+'</td>';
         y+='<td>'+item.degree+'</td>';
         y+='<td>'+item.city+'</td>';
         y+='<td>'+item.term+'</td></tr>';
+        cnt++;
     });
     y+='</tbody></table>';
 
@@ -208,7 +211,7 @@ myXHR('get', {'path':'/employment/'}).done(function(json){
     $.each(json.degreeStatistics.statistics,function(i,item){
         if(col==0){
             z+='<div id="statBoxRow">';
-            z+='<div class="degreeStat hover statLeft">';
+            z+='<div>';
         }
         if(col==1){
             z+='<div class="degreeStat hover statRight">';
@@ -217,16 +220,14 @@ myXHR('get', {'path':'/employment/'}).done(function(json){
         z+='<p>'+item.description+'</p></div>';
         col++;
         if(col==2){
-            z+='<div class="clearfix"></div>';
             z+='</div>';
             col=0;
         }
     });
-    z+='<div class="clearfix"></div>';
     z+='</div>';
 
     $('#employment-into').html(x);
-    $('#employment-table').html(y);
+    $('#employment-table').prepend(y);
     $('#employment-stats').html(z);
 
     //create the typing effect for the title
@@ -236,33 +237,56 @@ myXHR('get', {'path':'/employment/'}).done(function(json){
          breakLines: false,
          autoStart: false
     });
+    //pagintation for materialize
+      $('#empTable').pageMe({
+        pagerSelector:'#myPager',
+        prevText:'',
+        nextText:'',
+        showPrevNext:true,
+        hidePageNumbers:true,
+        perPage:5
+      });
+    $("#total").html(cnt+" Total Entries");
+
 });
 
 //get employment table
-//myXHR('get', {'path':'/employment/'}).done(function(json){
-//    var y='';
-//
-//    //employment table
-//    y+='<h2>'+json.employmentTable.title+'</h2>';
-//    y+='<table id="employmentTable" class="tables"><thead>';
-//    y+='<tr><th>Employer</th>';
-//    y+='<th>Degree</th>';
-//    y+='<th>Location</th>';
-//    y+='<th>Job Title</th>';
-//    y+='<th>Start Date</th></tr>';
-//    y+='</thead><tbody>';
-//    $.each(json.employmentTable.professionalEmploymentInformation,function(i,item){
-//        y+='<tr><td>'+item.employer+'</td>';
-//        y+='<td>'+item.degree+'</td>';
-//        y+='<td>'+item.city+'</td>';
-//        y+='<td>'+item.title+'</td>';
-//        y+='<td>'+item.startDate+'</td></tr>';
-//    });
-//    y+='</tbody></table>';
-//
-//    $('#employmentTableDiv').html(y);
-//    employmentTable();
-//});
+myXHR('get', {'path':'/employment/'}).done(function(json){
+    var x='';
+    var cnt = 0;
+
+    //employment table
+    x+='<h2>'+json.employmentTable.title+'</h2>';
+    x+='<table id="coopTable" class="tables"><thead>';
+    x+='<tr><th>Employer</th>';
+    x+='<th>Degree</th>';
+    x+='<th>Location</th>';
+    x+='<th>Job Title</th>';
+    x+='<th>Start Date</th></tr>';
+    x+='</thead><tbody>';
+    $.each(json.employmentTable.professionalEmploymentInformation,function(i,item){
+        x+='<tr><td>'+item.employer+'</td>';
+        x+='<td>'+item.degree+'</td>';
+        x+='<td>'+item.city+'</td>';
+        x+='<td>'+item.title+'</td>';
+        x+='<td>'+item.startDate+'</td></tr>';
+        cnt++;
+    });
+    x+='</tbody></table>';
+
+    $('#employment-coop').prepend(x);
+    //pagintation for materialize
+      $('#coopTable').pageMe({
+        pagerSelector:'#myPager2',
+        prevText:'',
+        nextText:'',
+        showPrevNext:true,
+        hidePageNumbers:true,
+        perPage:5
+      });
+    $("#total2").html(cnt+" Total Entries");
+
+});
 
 //get faculty and staff place in model
 myXHR('get', {'path':'/people/'}).done(function(json){
@@ -279,19 +303,19 @@ myXHR('get', {'path':'/people/'}).done(function(json){
     //loop through each faculty place into modal and then reset
     $.each(json.faculty,function(i,item){
         //create trigger for modals
-         x += '<a class="waves-effect waves-light btn modal-trigger" href="#modal'+ cnt +'">Modal'+ cnt +'</a>';
+         x += '<a class="waves-effect waves-light btn modal-trigger" href="#modal'+ cnt +'">'+ item.name +'</a>';
         //make modals
         x += '<div id="modal' + cnt +'" class="modal modal-fixed-footer">';
-            x += '<div class="modal-content">';
+            x += '<div class="modal-content center-align">';
                 x+='<div><h3>'+item.name+'</h3>';
-                //x+='<img src="'+item.imagePath+'">';
-                x+='<p>'+item.title+'</p>';
-                x+='<p>'+item.tagline+'</p>';
-                x+='<p>'+item.interestArea+'</p>';
-                x+='<p>'+item.office+'</p>';
-                x+='<p>'+item.website+'</p>';
-                x+='<p>'+item.phone+'</p>';
-                x+='<p>'+item.email+'</p></div>';
+                x+='<img src="'+item.imagePath+'">';
+                x+='<p>Title: '+item.title+'</p>';
+                x+='<quoteblock>Quote: '+item.tagline+'</quoteblock>';
+                x+='<p>Interst Area: '+item.interestArea+'</p>';
+                x+='<p>Office: '+item.office+'</p>';
+                x+='<p>Website: '+item.website+'</p>';
+                x+='<p>Phone: '+item.phone+'</p>';
+                x+='<p>Email: '+item.email+'</p></div>';
             x+='</div>';
         x+='</div>';
         $('#faculty').append(x);
@@ -308,174 +332,181 @@ myXHR('get', {'path':'/people/'}).done(function(json){
     
     //loop through each faculty place into modal and then reset
     $.each(json.staff,function(i,item){
-        y += '<a class="waves-effect waves-light btn modal-trigger" href="#modal'+ cnt +'">Modal'+ cnt +'</a>';
+        y += '<a class="waves-effect waves-light btn modal-trigger" href="#modal'+ cnt +'">'+ item.name +'</a>';
         y += '<div id="modal' + cnt +'" class="modal modal-fixed-footer">';
-            y += '<div class="modal-content">';
+            y += '<div class="modal-content center-align">';
                 y +='<div><h3>'+item.name+'</h3>';
-                //y +='<img src="'+item.imagePath+'">';
-                y +='<p>'+item.title+'</p>';
-                y +='<p>'+item.tagline+'</p>';
-                y +='<p>'+item.interestArea+'</p>';
-                y +='<p>'+item.office+'</p>';
-                y +='<p>'+item.website+'</p>';
-                y +='<p>'+item.phone+'</p>';
-                y +='<p>'+item.email+'</p></div>';
+                y +='<img src="'+item.imagePath+'">';
+                y +='<p>Title: '+item.title+'</p>';
+                y +='<quoteblock> Quote:'+item.tagline+'</quoteblock>';
+                y +='<p>Interest Area: '+item.interestArea+'</p>';
+                y +='<p>Office: '+item.office+'</p>';
+                y +='<p>Website: '+item.website+'</p>';
+                y +='<p>Phone: '+item.phone+'</p>';
+                y +='<p>Email: '+item.email+'</p></div>';
             y+='</div>';
         y+='</div>';
         $('#staff').append(y);
         y='';
         cnt++;
     });
-    
+    $(document).ready(function(){
+        $('.modal-trigger').leanModal();
+        
+  });
     
 });
 
 //get research
-//myXHR('get', {'path':'/research/'}).done(function(json){
-//		var x='';
-//		
-//		//for each loop
-//		x+='<h1>Research Areas</h1>';
-//		x+='<div id="accordion">';
-//		$.each(json.byInterestArea,function(i,item){
-//			x+='<h3>'+item.areaName+'</h3>';
-//			x+='<div><ul>';
-//			//for each loop
-//			$.each(item.citations,function(j,item2){
-//				x+='<li>'+item2+'</li>';
-//			});
-//			x+='</ul></div>';
-//		});
-//		x+='</div>';
-//		
-//		$('#research').html(x);
-//		$('#accordion').accordion();
-//	});
+myXHR('get', {'path':'/research/'}).done(function(json){
+		var x='';
+        var y = '';
+		
+        x+='<h1>Research Areas</h1>';
+        $('#research').html(x);
+		// setup accorian
+        y += '<ul class="collapsible popout" data-collapsible="accordion">';  
+            $.each(json.byInterestArea,function(i,item){
+                y += '<li>';
+                y+='<div class = "collapsible-header">'+item.areaName+'</div>';
+                y+='<div class="collapsible-body">';
+                $.each(item.citations,function(j,item2){
+                    y+='<p>'+item2+'</p>';
+                });
+                y+='</div>';
+                y += '</li>';
+            });
+
+    y += '</ul>';
+    $('#research').append(y);
+    $(document).ready(function(){
+        $('.collapsible').collapsible({
+            accordion: true
+        });
+    });
+});
 
 //get resources
-//myXHR('get', {'path':'/resources/'}).done(function(json){
-//    var a=''; //study abroad
-//    var b=''; //advising
-//    var c=''; //tutors/lab
-//    var d=''; //ambassadors
-//    var e=''; //forms
-//    var f=''; //coops
-//    var g=''; //news		
-//
-//    var x=''; //titles
-//
-//    //resources
-//    x+='<h1>'+json.title+'</h1>';
-//    x+='<h2>'+json.subTitle+'</h2>';
-//
-//    //study abroad
-//    var ct = 0;
-//    a+='<h2>'+json.studyAbroad.title+'</h2>';
-//    a+='<p>'+json.studyAbroad.description+'</p>';
-//    $.each(json.studyAbroad.places,function(i,item){
-//        if(ct == 0){
-//            a+='<div class="left studyAbroad">';
-//        }
-//        if(ct == 1){
-//            a+='<div class="right studyAbroad">';
-//        }
-//        a+='<h3>'+item.nameOfPlace+'</h3>';
-//        a+='<p>'+item.description+'</p>';
-//        a+='</div>';
-//        ct++;
-//    });
-//
-//
-//    var b1='';
-//    //advising
-//    b+='<h1>'+json.studentServices.title+'</h1>';
-//    b+='<div id="advisingTop"></div>';
-//    $.each(json.studentServices,function(i,item){
-//        // academic advisors
-//        if(item.title=="Academic Advisors"){
-//            b1+='<div class="left advising">';
-//            b1+='<h2>'+item.title+'</h2>';
-//            b1+='<p>'+item.description+'</p>';
-//            b1+='</div>';
-//        }
-//        //professional advisors
-//        if(item.title=="Professonal Advisors"){
-//            b+='<h2>'+item.title+'</h2>';
-//            $.each(item.advisorInformation,function(i,item2){
-//                b+='<h3>'+item2.name+'</h3>';
-//                b+='<h4>'+item2.department+'</h4>';
-//                b+='<h4>'+item2.email+'</h4><hr/>';
-//            });
-//        }
-//        //faculty advisors
-//        if(item.title=="Faculty Advisors"){
-//            b1+='<div class="right advising">';
-//            b1+='<h2>'+item.title+'</h2>';
-//            b1+='<p>'+item.description+'</p>';
-//            b1+='</div>';
-//            b1+='<div class="clearfix"></div>';
-//        }
-//        //minor advising
-//        if(item.title=="IST Minor Advising"){
-//            b+='<h2>'+item.title+'</h2>';
-//            $.each(item.minorAdvisorInformation,function(i,item2){
-//                b+='<h3>'+item2.title+'</h3>';
-//                b+='<h4>'+item2.advisor+'</h4>';
-//                b+='<h4>'+item2.email+'</h4><hr/>';
-//            });
-//        }
-//    });
-//
-//    //tutoring and lab info
-//    c+='<h2>'+json.tutorsAndLabInformation.title+'</h2>';
-//    c+='<p>'+json.tutorsAndLabInformation.description+'</p>';
-//    c+='<a href="'+json.tutorsAndLabInformation.tutoringLabHoursLink+'">Tutoring and Lab Hours</a>';
-//
-//    //student ambassadors
-//    d+='<h2>'+json.studentAmbassadors.title+'</h2>';
-//    d+='<img src="'+json.studentAmbassadors.ambassadorsImageSource+'"/>';
-//    $.each(json.studentAmbassadors.subSectionContent,function(i,item){
-//        d+='<h3>'+item.title+'</h3>';
-//        d+='<h4>'+item.description+'</h4>';
-//    });
-//    d+='<a href="'+json.studentAmbassadors.applicationFormLink+'">Student Ambassador Application Form</a>';
-//    d+='<p>'+json.studentAmbassadors.note+'</p>';
-//
-//    //grad form
-//    e+='<div id="gradForm" class="resource left forms">';
-//    e+='<h2>Graduate Forms</h2>';
-//    $.each(json.forms.graduateForms,function(i,item){
-//        e+='<h4><a href="'+item.href+'">'+item.formName+'</a></h4>';
-//    });
-//    e+='</div>';
-//
-//    //ug form
-//    e+='<div id="ugForm" class="resource right forms">';
-//    e+='<h2>Undergraduate Forms</h2>';
-//    $.each(json.forms.undergraduateForms,function(i,item){
-//        e+='<h4><a href="'+item.href+'">'+item.formName+'</a></h4>';
-//    });
-//    e+='</div>';
-//
-//    //coop enrollment
-//    f+='<h2>'+json.coopEnrollment.title+'</h2>';
-//    $.each(json.coopEnrollment.enrollmentInformationContent,function(i,item){
-//        f+='<h3>'+item.title+'</h3>';
-//        f+='<h4>'+item.description+'</h4>';
-//    });
-//    f+='<a href="'+json.coopEnrollment.RITJobZoneGuideLink+'">RIT Job Zone Guide</a>';
-//
-//    $('#resourceHead').html(x);
-//    $('#studyabroad').html(a);
-//    $('#advising').html(b);
-//    $('#tutors').html(c);
-//    $('#ambassadors').html(d);
-//    $('#forms').html(e);
-//    $('#coop').html(f);
-//    $('#advisingTop').html(b1);
-//
-//    resourceTabs();
-//});
+myXHR('get', {'path':'/resources/'}).done(function(json){
+   	var x=''; 
+    var y ='';
+
+    //resources
+    x+='<h2>'+json.title+'</h2>';
+    x+='<blockquote>'+json.subTitle+'</bloackquote>';
+    $('#resources').html(x);
+    // setup accorian
+    y += '<ul class="collapsible popout" data-collapsible="accordion">';
+    
+        //study abroad
+        y += '<li>';
+            y+='<div class = "collapsible-header">'+json.studyAbroad.title+'</div>';
+                y+='<div class="collapsible-body">';
+                    $.each(json.studyAbroad.places,function(i,item){       
+                        y += '<p>' + item.nameOfPlace+'</p>';
+                        y += '<p>' + item.description+'</p>'; 
+                    });
+            y+='</div>';
+        y += '</li>';
+    
+        //student services
+        y += '<li>';
+            y+='<div class = "collapsible-header">'+json.studentServices.title+'</div>';
+                y+='<div class="collapsible-body">';
+                    $.each(json.studentServices,function(i,item){       
+                        // academic 
+                        if(item.title=="Academic Advisors"){
+                            y+='<p>'+item.title+'</p>';
+                            y+='<p>'+item.description+'</p><hr/>';
+                            
+                        }
+                        //professional 
+                        if(item.title=="Professonal Advisors"){
+                            y+='<p>'+item.title+'</p>';
+                            $.each(item.advisorInformation,function(i,item2){
+                                y+='<p>'+item2.name+'</p>';
+                                y+='<p>'+item2.department+'</p>';
+                                y+='<p>'+item2.email+'</p><hr/>';
+                            });
+                        }
+                        //faculty 
+                        if(item.title=="Faculty Advisors"){
+                            y+='<p>'+item.title+'</p>';
+                            y+='<p>'+item.description+'</p><hr/>';
+                        }
+                        //minor 
+                        if(item.title=="IST Minor Advising"){
+                            y+='<p>'+item.title+'</p>';
+                            $.each(item.minorAdvisorInformation,function(i,item2){
+                                y+='<p>'+item2.title+'</p>';
+                                y+='<p>'+item2.advisor+'</p>';
+                                y+='<p>'+item2.email+'</p><hr/>';
+                            });
+                        } 
+                    });
+            y+='</div>';
+        y += '</li>';
+    
+        //tutoring and lab information
+        y += '<li>';
+            y+='<div class = "collapsible-header">'+json.tutorsAndLabInformation.title+'</div>';
+                y+='<div class="collapsible-body">';    
+                    y += '<p>' + json.tutorsAndLabInformation.description+'</p>';
+                    y += '<a class="center-align" href="'+json.tutorsAndLabInformation.tutoringLabHoursLink+'">Tutoring and Lab Hours</a>'; 
+            y+='</div>';
+        y += '</li>'
+    
+        //forms
+        y += '<li>';
+            y+='<div class = "collapsible-header">Forms</div>';
+                y+='<div class="collapsible-body">';    
+                   //grad
+                    y += '<h3> Graduate Forms</h3>';
+                   $.each(json.forms.graduateForms,function(i,item){
+			          y+='<p><a href="'+item.href+'">'+item.formName+'</a></p>';
+		           });
+                    y += '<hr/>';
+                   //undergrad
+                    y += '<h3> Undergraduate Forms</h3>';
+                   $.each(json.forms.undergraduateForms,function(i,item){
+                       y+='<p><a href="'+item.href+'">'+item.formName+'</a></p>';
+                   });
+            y+='</div>';
+        y += '</li>';
+    
+        //student ambass 
+        y += '<li>';
+            y+='<div class = "collapsible-header">'+json.studentAmbassadors.title+'</div>';
+                y+='<div class="collapsible-body">';    
+                    $.each(json.studentAmbassadors.subSectionContent,function(i,item){
+                        y+='<p>'+item.title+'</p>';
+                        y+='<p>'+item.description+'</p>';
+		            });
+                    y+='<img class="center-align" src="'+json.studentAmbassadors.ambassadorsImageSource+'"/>';
+            y+='</div>';
+        y += '</li>';
+    
+        //coop enroll
+        y += '<li>';
+            y+='<div class = "collapsible-header">'+json.coopEnrollment.title+'</div>';
+                y+='<div class="collapsible-body">';    
+                    $.each(json.coopEnrollment.enrollmentInformationContent,function(i,item){
+                        y+='<p>'+item.title+'</p>';
+                        y+='<p>'+item.description+'</p>';
+                    });
+                    y+='<a class="center-align" href="'+json.coopEnrollment.RITJobZoneGuideLink+'">RIT Job Zone Guide</a>';
+            y+='</div>';
+        y += '</li>';    
+    
+    y += '</ul>';
+    $('#resources').append(y);
+    $(document).ready(function(){
+        $('.collapsible').collapsible({
+            accordion: true
+        });
+  });
+    
+});
 
 //get footer
 myXHR('get', {'path':'/footer/'}).done(function(json){
@@ -505,3 +536,40 @@ myXHR('get', {'path':'/footer/'}).done(function(json){
 
     $('.page-footer').html(x);
     });
+
+//get news
+myXHR('get', {'path':'/news/'}).done(function(json){
+		var x='';
+        var y = '';
+		
+        x+='<h1>News</h1>';
+        $('#newsHeader').html(x);
+		// setup accorian
+        y += '<ul class="collapsible popout" data-collapsible="accordion">'; 
+                $.each(json.year,function(i,item){
+                    y += '<li>';
+                        y+='<div class = "collapsible-header">'+item.title+'</div>';
+                            y+='<div class="collapsible-body">';
+                                y+='<p>'+item.date+'</p>';
+                                y+='<p>'+item.description+'</p></tr>';
+                             y+='</div>';
+                    y += '</li>';
+                }); 
+                $.each(json.older,function(i,item){
+                    y += '<li>';
+                        y+='<div class = "collapsible-header">'+item.title+'</div>';
+                            y+='<div class="collapsible-body">';
+                                y+='<p>'+item.date+'</p>';
+                                y+='<p>'+item.description+'</td></p>';
+                             y+='</div>';
+                    y += '</li>';
+                });    
+    y += '</ul>';
+    $('#news').append(y);
+    $(document).ready(function(){
+        $('.collapsible').collapsible({
+            accordion: true
+        });
+    });
+});
+
