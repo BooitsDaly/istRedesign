@@ -26,11 +26,13 @@
 
     <body>
         <!--nav bar -->
-      <nav>
-        <div class="nav-wrapper">
-          <a href="#" class="brand-logo right">Logo</a>
+        <div class="navbar-fixed">
+          <nav>
+            <div class="nav-wrapper">
+              <a href="#" id="exception" class="brand-logo right"><img  src ="assets/images/banner1.png" alt="banner"/></a>
+            </div>
+          </nav>
         </div>
-      </nav>
         <main>
           <div class="container">    
             <div id="about"> </div>
@@ -45,6 +47,12 @@
                 </div>
             </div>
             <div id="employment-stats"></div>
+            <div id="map">
+                <h1>Where Our Students Work</h1>
+				<div id="map-div">
+					<iframe src="https://ist.rit.edu/api/map" scrolling="no" width="80%" height="600px"></iframe>
+				</div>  
+            </div>
             <div id="employment-coop">
                 <div class="col-md-12 center text-center">
                     <span class="left" id="total2"></span>

@@ -17,13 +17,17 @@
 .front{
     background-color: orangered;
 }
+.back{
+    background-color: black !important;
+    overflow-y: scroll;
+}
 
 .waves-effect{
     width: 33.33%;
 }
 
 #tableHeader{
-    display: inline-block;
+    clear: both;
 }
 
 .collapsible-body{
@@ -35,3 +39,63 @@
     height: 40em;
     overflow-y: scroll;
 }
+
+.card-content{
+    height: 40em;
+    overflow-y: scroll;
+}
+
+.empIntroBoxes{
+    background-color: darkgray;
+    border-radius: 5px;
+    padding: 2em;
+    width: 48%;
+    margin-right: 2%;
+    text-align: center;
+}
+
+.boxes{
+    background-color: darkgray;
+    float: left;
+    border-radius: 5px;
+    padding: 2em;
+    width: 48%;
+    margin-right: 2%;
+    text-align: center;
+    margin-bottom: 2em;
+    height: 13em;
+}
+
+#exception{
+    background-color: transparent !important;
+}
+
+.nav-wrapper{
+    background-color: orangered;
+}
+
+body{
+    background-color: lightgray;
+}
+
+.page-footer{
+    background-color: orangered !important;
+}
+
+a{
+    color: white !important;
+    background-color: orangered !important;
+}
+
+.card{
+    background-color: orangered !important;
+}
+
+.pagination li.active {
+    background-color: orangered !important;
+}
+
+#StudentsMap{
+    overflow: visible !important;
+}
+
